@@ -2,15 +2,19 @@ package furkan.hrmssystem.entities.concretes;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @Entity
 @Table(name = "employer_users")
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler","jobPostings"})
 public class EmployerUser {
 	
 	@Id
@@ -29,6 +33,9 @@ public class EmployerUser {
 
 	@Column(name = "e_mail")
 	private String email;
+
+	@OneToMany(mappedBy = "user")
+	private List<JobPosting> jobPostings;
 
 	public EmployerUser(String companyName, String companyWebSite, String companyPhone, String email) {
 		this.companyName = companyName;

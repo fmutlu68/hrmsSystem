@@ -9,7 +9,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 
 @Service
 public class EmailManager implements EmailService {
-    private JavaMailSender mailSender;
+    private final JavaMailSender mailSender;
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired

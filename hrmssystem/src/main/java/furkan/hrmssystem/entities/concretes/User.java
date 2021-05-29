@@ -2,6 +2,7 @@ package furkan.hrmssystem.entities.concretes;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,7 +35,6 @@ public class User {
 	private String validationCode;
 
 	public User(int userId, String eMail, String password) {
-		this.id = id;
 		this.userId = userId;
 		this.eMail = eMail;
 		this.password = password;
