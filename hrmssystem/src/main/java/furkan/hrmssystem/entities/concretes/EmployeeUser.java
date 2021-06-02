@@ -1,6 +1,7 @@
 package furkan.hrmssystem.entities.concretes;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -34,6 +35,9 @@ public class EmployeeUser {
 
 	@Column(name = "e_mail")
 	private String email;
+
+	@OneToMany(mappedBy = "user")
+	private List<Background> backgrounds;
 
 	public EmployeeUser(String firstName, String lastName, Date birthDate, String identityNo, String email) {
 		this.firstName = firstName;
