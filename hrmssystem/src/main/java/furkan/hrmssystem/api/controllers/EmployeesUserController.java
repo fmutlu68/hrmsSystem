@@ -10,15 +10,13 @@ import furkan.hrmssystem.entities.concretes.EmployeeUser;
 import furkan.hrmssystem.entities.concretes.User;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/employees")
+@CrossOrigin
 public class EmployeesUserController {
     private EmployeeUserService employeeUserService;
     private UserService userService;
@@ -36,7 +34,7 @@ public class EmployeesUserController {
 
     @SneakyThrows
     @PostMapping("/add")
-    public Result add(EmployeeUserDtoForRegister user) {
+    public Result add(@RequestBody EmployeeUserDtoForRegister user) {
         DataResult<EmployeeUser> employeeUser = employeeUserService.register(new EmployeeUser(user.getFirstname(), user.getLastname(), user.getBirthDate(), user.getIdentityNo(), user.getEmail()));
         if (employeeUser.isSuccess()){
             try {

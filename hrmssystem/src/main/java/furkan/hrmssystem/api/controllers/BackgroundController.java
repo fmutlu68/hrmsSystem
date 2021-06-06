@@ -19,6 +19,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/backgrounds")
+@CrossOrigin
 public class BackgroundController {
     private final BackgroundService backgroundService;
     private final JobExperienceService jobExperienceService;
