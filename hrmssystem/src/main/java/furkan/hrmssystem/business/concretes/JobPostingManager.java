@@ -42,6 +42,16 @@ public class JobPostingManager implements JobPostingService {
     }
 
     @Override
+    public DataResult<List<JobPosting>> getAllByEmployerId(int userId) {
+        return new SuccessDataResult<>(this.jobPostingDao.getByUser_UserId(userId),"İş İlanları Listelendi.");
+    }
+
+    @Override
+    public DataResult<List<JobPosting>> getAllNoActivated() {
+        return new SuccessDataResult<>(this.jobPostingDao.getByActivatedFalse(), "İlanlar Listelendi.");
+    }
+
+    @Override
     public Result changeVisibility(int id, int visibility) {
         JobPosting posting = this.jobPostingDao.findById(id).orElse(null);
         if (posting == null){
@@ -51,6 +61,30 @@ public class JobPostingManager implements JobPostingService {
         }
         this.jobPostingDao.save(posting);
         return new SuccessResult("İş İlanı Güncellendi.");
+    }
+
+    @Override
+    public Result activateJobPosting(int id) {
+        var jobPosting = this.jobPostingDao.findById(id).orElse(null);
+        if (jobPosting == null){
+            return new ErrorResult("İş İlanı Bulunamadı");
+        }
+        jobPosting.setActivated(true);
+        this.jobPostingDao.save(jobPosting);
+        return new SuccessResult("İş İlanı Onaylandı.");
+    }
+
+    @Override
+    public Result add(JobPosting posting) {
+        this.jobPostingDao.save(posting);
+        posting.setActive(false);
+        return new SuccessResult("İş İlanı Eklendi!");
+    }
+
+    @Override
+    public Result delete(JobPosting posting) {
+        this.jobPostingDao.delete(posting);
+        return new SuccessResult("İş İlanı Silindi.");
     }
 
     private Sort generateSort(String column, Sort.Direction direction) {return Sort.by(direction,column);}

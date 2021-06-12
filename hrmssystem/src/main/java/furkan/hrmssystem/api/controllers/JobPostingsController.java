@@ -49,8 +49,33 @@ public class JobPostingsController {
         return this.jobPostingService.getAllByCompanyName(companyName);
     }
 
+    @GetMapping("/getbyemployerid/{id}")
+    public DataResult<List<JobPosting>> getByEmployerId(@PathVariable("id") int employerId){
+        return this.jobPostingService.getAllByEmployerId(employerId);
+    }
+
+    @GetMapping("/getallnoactivated")
+    public DataResult<List<JobPosting>> getAllNoActivated(){
+        return this.jobPostingService.getAllNoActivated();
+    }
+
     @GetMapping("/changevisibility/{id}/{visibility}")
     public Result changeVisibility(@PathVariable("id") int id, @PathVariable("visibility") int visibility){
         return this.jobPostingService.changeVisibility(id, visibility);
+    }
+
+    @GetMapping("/activatejobposting/{id}")
+    public Result changeVisibility(@PathVariable("id") int id){
+        return this.jobPostingService.activateJobPosting(id);
+    }
+
+    @PostMapping("/add")
+    public Result add(@RequestBody JobPosting posting){
+        return this.jobPostingService.add(posting);
+    }
+
+    @PostMapping("/delete")
+    public Result delete(@RequestBody JobPosting posting){
+        return this.jobPostingService.delete(posting);
     }
 }

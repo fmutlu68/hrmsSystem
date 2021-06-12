@@ -36,11 +36,20 @@ public class JobPosting {
     @Column(name = "active")
     private boolean active;
 
+    @Column(name = "activated")
+    private boolean activated;
+
     @Column(name = "added_date")
     private Date addedDate;
 
     @Column(name = "deadline")
     private Date deadline;
+
+    @Column(name = "work_place")
+    private String workPlace;
+
+    @Column(name = "work_time")
+    private String workTime;
 
     @ManyToOne
     @JoinColumn(name = "job_position_id")

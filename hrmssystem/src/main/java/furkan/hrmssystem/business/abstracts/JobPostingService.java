@@ -13,5 +13,10 @@ public interface JobPostingService {
     DataResult<List<JobPosting>> getallOrderedByDeadline(Sort.Direction direction);
     DataResult<List<JobPosting>> getallOrderedByAddedDate(Sort.Direction direction);
     DataResult<List<JobPosting>> getAllByCompanyName(String companyName);
+    DataResult<List<JobPosting>> getAllByEmployerId(int userId);
+    DataResult<List<JobPosting>> getAllNoActivated();
     Result changeVisibility(int id, int visibility);
+    Result activateJobPosting(int id);
+    Result add(JobPosting posting);
+    Result delete(JobPosting posting);
 }

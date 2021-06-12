@@ -14,4 +14,8 @@ public interface JobPostingDao extends JpaRepository<JobPosting, Integer> {
     List<JobPostingDto> getAllIsActive();
 
     List<JobPosting> getByActiveTrueAndUser_CompanyName(String user_companyName);
+
+    List<JobPosting> getByUser_UserId(int user_userId);
+
+    List<JobPosting> getByActivatedFalse();
 }
