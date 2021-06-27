@@ -20,9 +20,9 @@ public class CloudinaryFileAdapter implements FileUploadService {
     @PostConstruct()
     private void initCloudinary() {
         this.cloudinary = new Cloudinary(ObjectUtils.asMap(
-                "cloud_name", "dbf9jb5vd",
-                "api_key", "429913953831789",
-                "api_secret", "FjghY88QuxBVlBbVIGRBlufVHcE"
+                "cloud_name", "CLOUD_NAME",
+                "api_key", "API_KEY",
+                "api_secret", "API_SECRET"
         ));
     }
     @SuppressWarnings("rawtypes")
