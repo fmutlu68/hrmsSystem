@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/backgrounds")
@@ -65,6 +66,27 @@ public class BackgroundController {
             return new ErrorResult(languageResult.getMessage());
         }
         return new SuccessResult(cvAdded.getMessage());
+    }
+
+    @PostMapping("/update")
+    public Result update(@RequestBody Background background) {
+        var result = this.backgroundService.getById(background.getId());
+        if (result.isSuccess() && result.getData() != null){
+            this.schoolService.deleteAllByCvId(background.getId());
+            this.languageExperienceService.deleteAllByCvId(background.getId());
+            this.jobExperienceService.deleteAllByCvId(background.getId());
+            background.setJobExperiences(background.getJobExperiences().stream().map(experience -> {experience.setId(0); return experience;}).collect(Collectors.toList()));
+            background.setLanguageExperiences(background.getLanguageExperiences().stream().map(experience -> {experience.setId(0); return experience;}).collect(Collectors.toList()));
+            background.setSchools(background.getSchools().stream().map(school -> {school.setId(0); return school;}).collect(Collectors.toList()));
+            var schools = this.schoolService.addAll(background.getSchools());
+            var jobExperiences = this.jobExperienceService.addAll(background.getJobExperiences());
+            var languageExperiences = this.languageExperienceService.addAll(background.getLanguageExperiences());
+            background.setJobExperiences(jobExperiences.getData());
+            background.setSchools(schools.getData());
+            background.setLanguageExperiences(languageExperiences.getData());
+            return this.backgroundService.update(background);
+        }
+        return result;
     }
 
     @GetMapping("/getall")

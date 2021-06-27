@@ -10,4 +10,5 @@ public interface LanguageExperienceService {
     DataResult<LanguageExperience> add(LanguageExperience experience);
     DataResult<List<LanguageExperience>> addAll(List<LanguageExperience> experiences);
     Result delete(LanguageExperience experience);
+    Result deleteAllByCvId(int cvId);
 }

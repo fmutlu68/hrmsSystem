@@ -12,5 +12,6 @@ public interface JobExperienceService {
     DataResult<List<JobExperience>> addAll(List<JobExperience> experiences);
     Result delete(JobExperience experience);
     Result deleteAll(List<JobExperience> experiences);
+    Result deleteAllByCvId(int cvId);
     DataResult<List<JobExperience>> getAllByUserIdAndOrderingEndingYear(boolean isAscending, int userId);
 }

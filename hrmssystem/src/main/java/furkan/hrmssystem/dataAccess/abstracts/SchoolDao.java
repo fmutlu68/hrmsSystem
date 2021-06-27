@@ -13,4 +13,6 @@ public interface SchoolDao extends JpaRepository<School, Integer> {
 
     @Query("from School where background.user.userId = :userId order by graduationYear desc nulls first ")
     List<School> getAllUserAndOrderedByDesc(int userId);
+
+    List<School> getByBackground_Id(int background_id);
 }

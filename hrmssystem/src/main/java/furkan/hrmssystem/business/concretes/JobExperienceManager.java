@@ -47,6 +47,13 @@ public class JobExperienceManager implements JobExperienceService {
     }
 
     @Override
+    public Result deleteAllByCvId(int cvId) {
+        var jobs = this.dao.getByBackground_Id(cvId);
+        this.dao.deleteAll(jobs);
+        return new SuccessResult();
+    }
+
+    @Override
     public DataResult<List<JobExperience>> getAllByUserIdAndOrderingEndingYear(boolean isAscending, int userId) {
         if (isAscending){
             return new SuccessDataResult<List<JobExperience>>(this.dao.getAllUserAndOrderedByAsc(userId));

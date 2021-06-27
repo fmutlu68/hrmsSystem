@@ -12,5 +12,6 @@ public interface SchoolService {
     DataResult<List<School>> addAll(List<School> schools);
     Result delete(School school);
     Result deleteAll(List<School> schools);
+    Result deleteAllByCvId(int cvId);
     DataResult<List<School>> getAllByUserIdAndOrderingEndingYear(boolean isAscending, int userId);
 }

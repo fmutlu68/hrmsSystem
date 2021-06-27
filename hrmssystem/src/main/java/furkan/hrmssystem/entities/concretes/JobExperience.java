@@ -1,6 +1,6 @@
 package furkan.hrmssystem.entities.concretes;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,6 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "job_experiences")
-@JsonIgnoreProperties(value = {"hibernateLazyInitializer","handler","background"})
 public class JobExperience {
 
     @Id
@@ -32,8 +31,12 @@ public class JobExperience {
     @Column(name = "ending_year")
     private String endingYear;
 
+    @Column(name = "background_id")
+    private int backgroundId;
+
     @ManyToOne
-    @JoinColumn(name = "background_id")
+    @JoinColumn(name = "background_id", insertable = false, updatable = false)
+    @JsonIgnore()
     private Background background; //CV Anlamında Background İfadesini Kullandım.
 
 }

@@ -5,7 +5,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -19,6 +23,8 @@ public class JobPosting {
     private int id;
 
     @Column(name = "job_description")
+    @NotBlank
+    @NotNull
     private String jobDescription;
 
     @Column(name = "max_pay")
@@ -46,9 +52,13 @@ public class JobPosting {
     private Date deadline;
 
     @Column(name = "work_place")
+    @NotBlank
+    @NotNull
     private String workPlace;
 
     @Column(name = "work_time")
+    @NotBlank
+    @NotNull
     private String workTime;
 
     @ManyToOne
@@ -62,5 +72,8 @@ public class JobPosting {
     @ManyToOne
     @JoinColumn(name = "city_id")
     private City city;
+
+    @OneToMany(mappedBy = "jobPosting")
+    private List<FavoriteJobPosting> jobPostings;
 
 }

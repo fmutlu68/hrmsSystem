@@ -1,6 +1,10 @@
 package furkan.hrmssystem.entities.concretes;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.annotations.ColumnDefault;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -23,20 +27,26 @@ public class User {
 	private int userId;
 	
 	@Column(name = "e_mail")
-	private String eMail;
+	@NotNull
+	@NotBlank
+	private String email;
 	
 	@Column(name = "password")
+	@NotNull
+	@NotBlank
 	private String password;
 
 	@Column(name = "status")
 	private boolean status;
 
 	@Column(name = "vaildaiton_code")
+	@NotNull
+	@NotBlank
 	private String validationCode;
 
-	public User(int userId, String eMail, String password) {
+	public User(int userId, String email, String password) {
 		this.userId = userId;
-		this.eMail = eMail;
+		this.email = email;
 		this.password = password;
 	}
 	

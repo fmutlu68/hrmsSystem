@@ -48,6 +48,13 @@ public class SchoolManager implements SchoolService {
     }
 
     @Override
+    public Result deleteAllByCvId(int cvId) {
+        var cvs = this.dao.getByBackground_Id(cvId);
+        this.dao.deleteAll(cvs);
+        return new SuccessResult();
+    }
+
+    @Override
     public DataResult<List<School>> getAllByUserIdAndOrderingEndingYear(boolean isAscending, int userId) {
         if (isAscending){
             return new SuccessDataResult<List<School>>(this.dao.getAllUserAndOrderedByAsc(userId));

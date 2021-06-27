@@ -8,31 +8,25 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
-@Table(name = "schools")
-public class School {
+@Table(name = "operation_types")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class OperationType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
-    @Column(name = "school_name")
+    @Column(name = "name")
     @NotNull
     @NotBlank
-    private String schoolName;
+    private String name;
 
-    @Column(name = "graduation_year")
-    private String graduationYear;
-
-    @Column(name = "background_id")
-    private int backgroundId;
-
-    @ManyToOne
-    @JoinColumn(name = "background_id", insertable = false, updatable = false)
+    @OneToMany(mappedBy = "operationType")
     @JsonIgnore()
-    private Background background; //CV Anlamında Background İfadesini Kullandım.
+    private List<UserOperation> userOperations;
 }

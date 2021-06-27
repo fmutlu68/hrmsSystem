@@ -36,4 +36,11 @@ public class LanguageExperienceManager implements LanguageExperienceService {
         this.dao.delete(experience);
         return new SuccessResult("Bilinen Dil: " + experience.getLanguageName() +" Silindi.");
     }
+
+    @Override
+    public Result deleteAllByCvId(int cvId) {
+        var languages = this.dao.getByBackground_Id(cvId);
+        this.dao.deleteAll(languages);
+        return new SuccessResult();
+    }
 }

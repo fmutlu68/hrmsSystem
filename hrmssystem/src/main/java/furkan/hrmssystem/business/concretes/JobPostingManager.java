@@ -6,9 +6,10 @@ import furkan.hrmssystem.dataAccess.abstracts.JobPostingDao;
 import furkan.hrmssystem.entities.concretes.JobPosting;
 import furkan.hrmssystem.entities.dtos.JobPostingDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -22,33 +23,48 @@ public class JobPostingManager implements JobPostingService {
     }
 
     @Override
-    public DataResult<List<JobPostingDto>> getallByActiveIsTrue() {
-        return new SuccessDataResult<List<JobPostingDto>>(this.jobPostingDao.getAllIsActive());
+    public DataResult<Page> getallByActiveIsTrue(int pageNo, int pageSize) {
+        return new SuccessDataResult<Page>(this.jobPostingDao.getByActiveTrue(PageRequest.of(pageNo, pageSize)));
     }
 
     @Override
-    public DataResult<List<JobPosting>> getallOrderedByDeadline(Sort.Direction direction) {
-        return new SuccessDataResult<List<JobPosting>>(this.jobPostingDao.findAll(generateSort("deadline", direction)));
+    public DataResult<Page> getallOrderedByDeadline(Sort.Direction direction, int pageNo, int pageSize) {
+        return new SuccessDataResult<Page>(createPage(this.jobPostingDao.findAll(generateSort("deadline", direction)), pageNo, pageSize));
     }
 
     @Override
-    public DataResult<List<JobPosting>> getallOrderedByAddedDate(Sort.Direction direction) {
-        return new SuccessDataResult<List<JobPosting>>(this.jobPostingDao.findAll(generateSort("addedDate", direction)));
+    public DataResult<Page> getallOrderedByAddedDate(Sort.Direction direction, int pageNo, int pageSize) {
+        return new SuccessDataResult<Page>(createPage(this.jobPostingDao.findAll(generateSort("addedDate", direction)), pageNo, pageSize));
     }
 
     @Override
-    public DataResult<List<JobPosting>> getAllByCompanyName(String companyName) {
-        return new SuccessDataResult<List<JobPosting>>(this.jobPostingDao.getByActiveTrueAndUser_CompanyName(companyName));
+    public DataResult<Page> getAllByCompanyName(String companyName, int pageNo, int pageSize) {
+        return new SuccessDataResult<Page>(this.jobPostingDao.getByActiveTrueAndUser_CompanyName(companyName, PageRequest.of(pageNo, pageSize)));
     }
 
     @Override
-    public DataResult<List<JobPosting>> getAllByEmployerId(int userId) {
-        return new SuccessDataResult<>(this.jobPostingDao.getByUser_UserId(userId),"İş İlanları Listelendi.");
+    public DataResult<Page> getAllByEmployerId(int userId, int pageNo, int pageSize) {
+        return new SuccessDataResult<Page>(this.jobPostingDao.getByUser_UserId(userId, PageRequest.of(pageNo, pageSize)),"İş İlanları Listelendi.");
     }
 
     @Override
-    public DataResult<List<JobPosting>> getAllNoActivated() {
-        return new SuccessDataResult<>(this.jobPostingDao.getByActivatedFalse(), "İlanlar Listelendi.");
+    public DataResult<Page> getAllNoActivated(int pageNo, int pageSize) {
+        return new SuccessDataResult<>(this.jobPostingDao.getByActivatedFalse(PageRequest.of(pageNo, pageSize)), "İlanlar Listelendi.");
+    }
+
+    @Override
+    public DataResult<Page> getByMaxPayLessThanEqualAndMinPayGreaterThanEqual(int maxPay, int minPay, int pageNo, int pageSize) {
+        return new SuccessDataResult<>(this.jobPostingDao.getByMaxPayLessThanEqualAndMinPayGreaterThanEqual(maxPay, minPay, PageRequest.of(pageNo, pageSize)), "İlanlar Listelendi.");
+    }
+
+    @Override
+    public DataResult<Page> getByDeadlineBefore(Date deadline, int pageNo, int pageSize) {
+        return new SuccessDataResult<>(this.jobPostingDao.getByDeadlineLessThanEqual(deadline, PageRequest.of(pageNo, pageSize)), "İlanlar Listelendi.");
+    }
+
+    @Override
+    public DataResult<Page> getByJobPosition_Id(int jobPositionId, int pageNo, int pageSize) {
+        return new SuccessDataResult<>(this.jobPostingDao.getByJobPosition_Id(jobPositionId, PageRequest.of(pageNo, pageSize)), "İlanlar Listelendi.");
     }
 
     @Override
@@ -88,4 +104,8 @@ public class JobPostingManager implements JobPostingService {
     }
 
     private Sort generateSort(String column, Sort.Direction direction) {return Sort.by(direction,column);}
+
+    private Page createPage(List list, int pageNo, int pageSize) {
+        return new PageImpl(list, PageRequest.of(pageNo -1, pageSize), pageSize);
+    }
 }

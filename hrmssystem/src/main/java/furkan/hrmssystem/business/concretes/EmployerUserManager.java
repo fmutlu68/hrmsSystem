@@ -2,12 +2,7 @@ package furkan.hrmssystem.business.concretes;
 
 import java.util.List;
 
-import furkan.hrmssystem.business.businessAnnotations.Validate;
-import furkan.hrmssystem.business.validationRules.concretes.ValidationType;
-import furkan.hrmssystem.core.utilities.results.DataResult;
-import furkan.hrmssystem.core.utilities.results.Result;
-import furkan.hrmssystem.core.utilities.results.SuccessDataResult;
-import furkan.hrmssystem.core.utilities.results.SuccessResult;
+import furkan.hrmssystem.core.utilities.results.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,8 +32,17 @@ public class EmployerUserManager implements EmployerUserService{
 	}
 
 	@Override
-	@Validate(currentValidation = ValidationType.EMPLOYERUSERVALIDATOR)
+	public DataResult<EmployerUser> checkUserIsEmployer(String mail) {
+		var result = this.employerUserDao.getByEmailIsEmployer(mail);
+		if (result != null && !result.isOld()){
+			return new SuccessDataResult<EmployerUser>(result);
+		}
+		return new ErrorDataResult<EmployerUser>("Kullanıcı Bulunamadı.");
+	}
+
+	@Override
 	public DataResult<EmployerUser> register(EmployerUser user) {
+		user.setOld(false);
 		return new SuccessDataResult<EmployerUser>(employerUserDao.save(user), "Kayıt Başarılı");
 	}
 
@@ -46,6 +50,12 @@ public class EmployerUserManager implements EmployerUserService{
 	public Result delete(EmployerUser user) {
 		employerUserDao.delete(user);
 		return new SuccessResult("Silme İşlemi Başarılı.");
+	}
+
+	@Override
+	public Result update(EmployerUser user) {
+		this.employerUserDao.save(user);
+		return new SuccessResult("Kullanıcı Güncellendi.");
 	}
 
 }

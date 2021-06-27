@@ -1,6 +1,5 @@
 package furkan.hrmssystem.entities.concretes;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,8 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Table(name = "backgrounds")
 @Entity
-@JsonIgnoreProperties(value = {"hibernateLazyInitializer","handler","user"})
-public class Background { //CV Anlamında Background İfadesini Kullandım.
+public class Background {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

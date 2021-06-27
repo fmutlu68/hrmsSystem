@@ -6,6 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import java.util.List;
 
 @Data
@@ -21,6 +24,8 @@ public class City {
     private int id;
 
     @Column(name = "name")
+    @NotNull
+    @NotBlank
     private String name;
 
     @ManyToOne()

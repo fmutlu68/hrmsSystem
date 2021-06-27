@@ -14,6 +14,7 @@ public class JobPostingDto {
     private String companyName;
     private String jobPositionName;
     private int vacancy;
+    private int maxPay;
     private Date addedDate;
     private Date deadline;
 }

@@ -10,6 +10,7 @@ import furkan.hrmssystem.entities.concretes.EmployeeUser;
 public interface EmployeeUserService {
 	DataResult<List<EmployeeUser>> getAll();
 	DataResult<EmployeeUser> getById(int id);
+	DataResult<EmployeeUser> checkUserIsEmployer(String mail);
 	DataResult<EmployeeUser> register(EmployeeUser user) throws RemoteException, Exception;
 	Result delete(EmployeeUser user);
 	void checkUserIsExistByIdentityNo(String tcno) throws Exception;

@@ -3,12 +3,20 @@ package furkan.hrmssystem.entities.concretes;
 import java.util.Date;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
 @Table(name = "system_users")
+@AllArgsConstructor
+@NoArgsConstructor
 public class SystemUser {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,31 +27,32 @@ public class SystemUser {
 	private int jobPositionId;
 	
 	@Column(name = "first_name")
+	@NotNull
+	@NotBlank
 	private String firstName;
 	
 	@Column(name = "last_name")
+	@NotNull
+	@NotBlank
 	private String lastName;
 	
 	@Column(name = "birth_date")
+	@NotNull
 	private Date birthDate;
 	
 	@Column(name = "identity_no")
+	@NotNull
+	@NotBlank
 	private String identityNo;
 
-	public SystemUser() {
-		super();
-	}
+	@Column(name = "email")
+	@NotBlank
+	@NotNull
+	@Email
+	private String email;
 
-	public SystemUser(int userId, int jobPositionId, String firstName, String lastName, Date birthDate,
-			String identityNo) {
-		super();
-		this.userId = userId;
-		this.jobPositionId = jobPositionId;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.birthDate = birthDate;
-		this.identityNo = identityNo;
-	}
-	
-	
+	@ManyToOne()
+	@JoinColumn(name = "job_position_id", insertable= false, updatable = false)
+	@JsonIgnore()
+	private JobPosition position;
 }

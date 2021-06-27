@@ -1,6 +1,8 @@
 package furkan.hrmssystem.entities.concretes;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -22,8 +24,13 @@ public class JobPosition {
 	private int id;
 	
 	@Column(name = "name")
+	@NotBlank
+	@NotNull
 	private String jobPositionName;
 
 	@OneToMany(mappedBy = "jobPosition")
 	private List<JobPosting> jobPostings;
+
+	@OneToMany(mappedBy = "position")
+	private List<SystemUser> systemUser;
 }
