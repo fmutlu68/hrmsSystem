@@ -1,0 +1,1 @@
+dbScript.sql Dosyasının İçinde Sadece Tablo Oluşturma Sql'leri Bulunmaktadır. Bir Database Oluşturup Database'de Query Tool Aracılığıyla Sql'i Çalıştırmanız Gerekmektedir.
